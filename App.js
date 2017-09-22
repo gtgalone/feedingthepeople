@@ -1,7 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Slider, Switch, Alert, Button } from 'react-native';
+import { StyleSheet, Text, View, Slider, Switch, Alert, Button, DrawerLayoutAndroid } from 'react-native';
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      drawer: false,
+    }
+    this.openDrawer = this.openDrawer.bind(this);
+    this.closeDrawer = this.closeDrawer.bind(this);
+  }
   toggleAlert() {
     return Alert.alert(
       'Alert Title',
@@ -14,19 +22,31 @@ export default class App extends React.Component {
       { cancelable: false }
     )
   }
+  openDrawer() {
+    this.refs['drawer'].openDrawer();
+  }
+  closeDrawer() {
+    this.refs['drawer'].closeDrawer();
+  }
   render() {
-    return (
+    const navigationView = (
       <View style={styles.container}>
-        <Text>Open up rt working oyour </Text>
-        <Slider
-          minimumValue={0}
-          maximumValue={100}
-          step={5}
-          onValueChange={(value) => value}
-        />
-        <Switch />
-        <Button title="test alert" color="#841584" accessibilityLabel="Learn more about this purple button" onPress={this.toggleAlert} />
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+        <Button title="test alert" color="#841584" accessibilityLabel="Learn more about this purple button" onPress={this.closeDrawer} />
       </View>
+    );
+    return (
+      <DrawerLayoutAndroid
+        ref={'drawer'}
+        drawerWidth={300}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
+        renderNavigationView={() => navigationView}>
+        <View style={styles.container}>
+          <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
+          <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
+          <Button title="test alert" color="#841584" accessibilityLabel="Learn more about this purple button" onPress={this.openDrawer} />
+        </View>
+      </DrawerLayoutAndroid>
     );
   }
 }
