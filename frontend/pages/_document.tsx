@@ -32,15 +32,9 @@ export default class extends Document {
           <meta property="twitter:description" content={getConfig().publicRuntimeConfig.SITE_DESCRIPTION} />
           <meta property="twitter:image" content={getConfig().publicRuntimeConfig.SITE_IMAGE} />
           <meta name="format-detection" content="telephone=no, address=no, email=no"/>
-          <link
-            href="/static/fontawesome/css/all.css"
-            rel="stylesheet"
-          />
+          <link href="/static/fontawesome/css/all.css" rel="stylesheet" />
           <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"
-            rel="stylesheet"
-          />
+          <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR" rel="stylesheet" />
           <link rel='stylesheet' type='text/css' href='/static/nprogress.css' />
           <link rel='stylesheet' type='text/css' href='/static/rc-slider.css' />
           <link rel='stylesheet' type='text/css' href='/static/react-toastify.css' />

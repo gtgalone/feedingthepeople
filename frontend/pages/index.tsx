@@ -1,50 +1,16 @@
 import * as React from 'react'
 
 class Index extends React.Component {
-  private nav: any
-  private lastScrollY: number
-  private ticking: boolean
-
-  public constructor(props) {
-    super(props)
-    this.nav = React.createRef()
-
-    this.lastScrollY = 0
-    this.ticking = false
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-
-  handleScroll = () => {
-    this.lastScrollY = window.scrollY
-
-    if (!this.ticking) {
-      window.requestAnimationFrame(() => {
-        this.nav.current.style.height = `${460 - this.lastScrollY}px`
-        this.ticking = false
-      })
-      this.ticking = true
-    }
-  };
-  render() {
+  public render() {
     return (
       <div>
-        <div className="d-flex justify-content-between p-3">
-          <h1 className="text-white text-info">studya</h1>
-          <button type="button" className="btn btn-warning text-white m-2">로그인</button>
-        </div>
-        <div ref={this.nav} className="main-image d-flex flex-column justify-content-center align-items-center position-relative">
+        <div className="main-image position-relative">
+          <div className="main-header position-relative d-flex justify-content-center p-3 px-5">
+            <img height="90" src="/static/main-logo.png" />
+          </div>
           <div className="background-shadow position-absolute"></div>
-          <div className="main-image-text position-relative text-center">
-            <div className="text-white display-4 font-weight-bold">스터디 모임 커뮤니티</div>
-            <button type="button" className="btn btn-danger text-white m-2">가입하기</button>
+          <div className="main-image-text position-absolute d-flex flex-wrap">
+            <div className="text-white-6">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
           </div>
         </div>
         <div className="d-flex flex-wrap justify-content-center p-3" style={{ minWidth: '50%'}}>
@@ -150,15 +116,24 @@ class Index extends React.Component {
           </div>
         </div>
         <style jsx>{`{
+          .main-header {
+            z-index: 5
+          }
           .main-image {
-            height: 400px;
-            min-height: 200px;
+            height: 500px;
             background-image: url(/static/main-image.jpg);
             background-size: cover;
             background-position: center;
           }
           .main-image-text {
+            width: 85%;
             z-index: 5;
+            font-size: 20px;
+            line-height: 1.7 !important;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            font-family: 'Noto Serif KR', sans-serif !important;
           }
           .background-shadow {
             top: 0;

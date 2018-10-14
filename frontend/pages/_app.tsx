@@ -77,7 +77,7 @@ class MyApp extends App<Props> {
     return (
       <Container>
         <Head>
-          <title>스터디야</title>
+          <title>Feeding the People</title>
         </Head>
         <ToastContainer
           position="top-center"
@@ -100,10 +100,6 @@ class MyApp extends App<Props> {
           }
         </Provider>
         <style jsx global>{`{
-          body {
-            font-family: 'Noto Sans KR', sans-serif !important;
-            line-height: 1.2 !important;
-          }
           input::-ms-clear {
             display: none;
           }
@@ -175,9 +171,6 @@ class MyApp extends App<Props> {
           }
           .text-lightindigo {
             color: #4C7AD7 !important;
-          }
-          .text-white {
-            color: #ffffff;
           }
           .text-white-6 {
             color: rgba(255, 255, 255, 0.6) !important;
