@@ -40,40 +40,12 @@ class Layout extends React.Component<Props, State> {
   }
 
   public render() {
-    const { children, router, isWindows } = this.props
-    const isIndex = router.pathname == '/'
-    const isSearch = router.pathname == '/search'
+    const { children } = this.props
     return (
       <React.Fragment>
         <div className="d-flex">
-          { isIndex ? children :
-          <div className="left pb-5">
-            <header>
-            </header>
-            {children}
-          </div>
-          }
-          <div className="desktop w-100 bg-theme-primary position-relative d-flex justify-content-center align-items-center">
-
-          </div>
+          {children}
         </div>
-        <style jsx>{`{
-          .left {
-            width: ${ isWindows ? '397px' : '380px' };
-            height: 100vh;
-            overflow-y: scroll;
-            box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.3);
-            z-index: 10;
-          }
-          .content {
-            padding-top: ${ isSearch ? '0' : '410px' };
-            height: 100vh;
-          }
-          .desktop {
-            flex: 1;
-            height: 100vh;
-          }
-        }`}</style>
       </React.Fragment>
     )
   }

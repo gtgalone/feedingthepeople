@@ -1,121 +1,174 @@
 import * as React from 'react'
+import throttle from 'lodash/throttle'
 
-class Index extends React.Component {
+interface Props {
+  isMobile: boolean
+}
+
+class Index extends React.Component<Props> {
+  private ticking: boolean
+  private heartRef: any
+  private heart2Ref: any
+
+  public constructor(props) {
+    super(props)
+    this.heartRef = React.createRef()
+    this.heart2Ref = React.createRef()
+  }
+
+  public componentDidMount() {
+    const { isMobile } = this.props
+    console.log(isMobile)  
+    window.addEventListener(
+      'scroll',
+      throttle(this.handleScroll, 99)
+    )
+  }
+  
+  public componentWillUnmount() {
+    window.removeEventListener(
+      'scroll',
+      throttle(this.handleScroll, 99)
+    )
+  }
+
+  public handleScroll = () => {
+    console.log(window)
+    console.log(window.scrollY / document.body.clientHeight)
+    if (!this.ticking) {
+      window.requestAnimationFrame(() => {
+        this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heartRef.current.style.transform = `rotate(30deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
+        this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heart2Ref.current.style.transform = `rotate(-30deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
+        this.ticking = false
+      })
+
+      this.ticking = true
+    }
+  }
+
   public render() {
+    const { isMobile } = this.props
     return (
-      <div>
-        <div className="main-image position-relative">
-          <div className="main-header position-relative d-flex justify-content-center p-3 px-5">
+      <div className="w-100">
+        <div className="main-image relative">
+          <div className="main-header relative flex justify-center pa3 ph-5">
             <img height="90" src="/static/main-logo.png" />
           </div>
-          <div className="background-shadow position-absolute"></div>
-          <div className="main-image-text position-absolute d-flex flex-wrap">
+          <div className="background-shadow absolute"></div>
+          <div className="main-image-text absolute flex flex-wrap">
             <div className="text-white-6">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
           </div>
         </div>
-        <div className="d-flex flex-wrap justify-content-center p-3" style={{ minWidth: '50%'}}>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">영어 스터디 모집</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
+        <section className="about w-100 pa4 tc relative">
+          <p className="lh-copy">
+            Feeding the People 은 매 번 음식을 사드시기 번거로우신 분들을 위해 만들어졌습니다.<br />
+            MSG를 전혀 쓰지 않고, 천연 조미료만을 사용해 만든 건강한 음식을 매 주 배달해 드립니다.<br />
+            ​<br />
+            일회용 그릇은 사용하지 않고, 반찬그릇은 $5 Deposit을 받으며 용기 반환시 Refund 해 드립니다.<br />
+            금액은 $40이며 매 주 월요일에 배달해 드립니다.
+          </p>
+          <h1 className="mb3 relative">
+            Chef of Feeding the People
+            <img ref={this.heartRef} src="/static/heart.png" className="absolute heart-1" />
+            <img ref={this.heart2Ref} src="/static/heart.png" className="absolute heart-2" />
+          </h1>
+          <img src="/static/about.jpg" className="w-90 w-50-ns br3" />
+          <p className="lh-copy">
+            THE CHEF: HAELEE CHOI (최혜리)
+            <br /><br />
+            두 아이의 엄마이자 20년차 가정주부입니다.<br />
+            곧 대학을 가는 아들을 생각하며 자녀를 먹이는 마음으로 음식을 만들며,<br /> 
+            시라큐스 크리스찬 아카데미 선생님들(40-50명)의 점심 식사를 매 주 준비해 온 경험이 있습니다.<br />
+          </p>
+        </section>
+        <section className="how-to relative pa1 pa4-ns">
+          <h1 className="mb3 tc">이용 방법</h1>
+          <div className="flex flex-column flex-row-ns justify-center flex-wrap relative items-center">
+            <div className="step-card tc br3 mv3 mb0-ns bg-animate hover-bg-gold hover-white">
+              <h4>Step 1</h4>
+              <div className="f-subheadline">
+                <i className="fas fa-phone-volume"></i>
+              </div>
+              <h2>주문</h2>
+              <p className="lh-copy">​(201) 615-8438 로 전화해서 주문해주세요!</p>
+            </div>
+            <div className="step-card tc br3 ml3-ns mv3 mb0-ns bg-animate hover-bg-gold hover-white">
+              <h4>Step 2</h4>
+              <div className="f-subheadline">
+                <i className="fas fa-people-carry"></i>
+              </div>
+              <h2>배달</h2>
+              <p className="lh-copy">원하는 날짜부터 맛있는 음식을 배달해요.</p>
+            </div>
+            <div className="step-card tc br3 ml3-ns mv3 mb0-ns bg-animate hover-bg-gold hover-white">
+              <h4>Step 3</h4>
+              <div className="f-subheadline">
+                <i className="far fa-credit-card"></i>
+              </div>
+              <h2>결제</h2>
+              <p className="lh-copy">배달 온 분께 매 주 $40 를 드리면 결제 완료!</p>
+            </div>
+          </div>
+        </section>
+        <section className="menu w-100 relative pa1 pa4-ns">
+          <h1 className="mb3 tc">지난 메뉴</h1>
+          <div className="tc">
+            ​곰탕, 순두부 찌개, 동그랑땡, 무생채, 멸치 볶음
+          </div>
+        </section>
+        <section className="after-use w-100 relative pa1 pa4-ns">
+          <h3 className="mb3 tc white">Feeding the People을 추천해요</h3>
+          <div className="flex flex-column flex-row-ns flex-wrap justify-center items-center items-start-ns">
+            <div className="after-use-card flex flex-column tc br3 mb0-ns grow">
+              <div className="flex flex-row o-30">
+                <hr />
+                <i className="fas fa-quote-left mh3 white"></i>
+                <hr />
+              </div>
+              <p className="f6 lh-copy o-60">유학온 뒤로 제대로 챙겨먹지 못했는데, Feeding the People을 이용한 후 너무 잘먹고 지내고 있어요!</p>
+              <div className="flex items-center f6">
+                <img src="/static/card-image.jpg" width="32" height="32" className="br-100 mr2" />
+                <span className="o-60">심제훈</span>
+                <span className="ml1 o-40">@시라큐스 대학교</span>
+              </div>
+            </div>
+            <div className="after-use-card flex flex-column tc br3 ml3-ns mb0-ns grow">
+              <div className="flex flex-row o-30">
+                <hr />
+                <i className="fas fa-quote-left mh3 white"></i>
+                <hr />
+              </div>
+              <p className="f6 lh-copy o-60">매일 외국 음식만 먹다보니 너무 한국 음식 생각이 많이 났는데, 너무 맛있고 손 맛이 좋으셔서 항상 만족하면서 이용하고 있네요.</p>
+              <div className="flex items-center f6">
+                <img src="/static/card-image.jpg" width="32" height="32" className="br-100 mr2" />
+                <span className="o-60">심제훈</span>
+                <span className="ml1 o-40">@시라큐스 대학교</span>
+              </div>
+            </div>
+            <div className="after-use-card flex flex-column tc br3 ml3-ns mb0-ns grow">
+              <div className="flex flex-row o-30">
+                <hr />
+                <i className="fas fa-quote-left mh3 white"></i>
+                <hr />
+              </div>
+              <p className="f6 lh-copy o-60">진짜 한국에서 먹었던 음식보다 맛있는 것 같아요! 3년째 이용 중인데 변함없고 항상 맛있어요!</p>
+              <div className="flex items-center f6">
+                <img src="/static/card-image.jpg" width="32" height="32" className="br-100 mr2" />
+                <span className="o-60">심제훈</span>
+                <span className="ml1 o-40">@시라큐스 대학교</span>
               </div>
             </div>
           </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">회화 스터디 같이하실분</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">개발 스터디 합시다</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">토플 스터디 (120점 목표)</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">개발 스터디 해요</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">토익 스터디 할 사람</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">수학 스터디 모집해요</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">개발 스터디 같이 해보실 분</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">회화 스터디 할까요?</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-          <div className="card m-1" style={{ width: '18rem' }}>
-            <img className="card-img-top" src="/static/card-image.jpg" height="180" alt="Card image cap" />
-            <div className="card-body">
-              <h5 className="card-title">개발 스터디</h5>
-              <p className="card-text">일상생활에 필요한 영어를</p>
-              <div className="text-center">
-                <a href="#" className="btn btn-info">살펴보기</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
         <style jsx>{`{
+          hr {
+            border: 1px solid #FFFFFF;
+            flex-grow: 1;
+            flex-shrink: 0;
+            flex-basis: auto;
+          }
           .main-header {
             z-index: 5
           }
@@ -142,6 +195,54 @@ class Index extends React.Component {
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1;
+          }
+          .about {
+            margin: 0 auto;
+          }
+          .heart-1 , .heart-2{
+            transition: all 0.2s;
+            opacity: 0;
+          }
+          .heart-1 {
+            top: 0;
+            right: ${ isMobile ? 0 : '10vw' };
+            transform: rotate(-30deg) scale(0.1);
+          }
+          .heart-2 {
+            top: 60px;
+            left: ${ isMobile ? 0 : '10vw' };
+            transform: rotate(50deg) scale(0.3);
+          }
+          .how-to:before {
+            z-index: 0;
+            content: '';
+            display: block;
+            opacity: 0.1;
+            background-image: url('/static/pattern.png');
+            background-size: 30%;
+            background-repeat: repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+          .step-card {
+            max-width: 280px;
+            min-width: 280px;
+            box-shadow: 0 18px 48px rgba(0,0,0,0.075);
+            border-radius: 0.316rem;
+            padding: 1.778rem;
+          }
+          .after-use {
+            background-color: rgb(244, 226, 65);
+            background-image: linear-gradient(rgb(244, 152, 66), rgb(244, 226, 65));
+          }
+          .after-use-card {
+            max-width: 280px;
+            min-width: 280px;
+            border-radius: 0.316rem;
+            padding: 1.778rem;
           }
         }`}</style>
       </div>
