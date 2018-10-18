@@ -33,11 +33,11 @@ export default class extends Document {
           <meta property="twitter:image" content={getConfig().publicRuntimeConfig.SITE_IMAGE} />
           <meta name="format-detection" content="telephone=no, address=no, email=no"/>
           <link href="/static/fontawesome/css/all.css" rel="stylesheet" />
-          <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css?family=Noto+Serif+KR" rel="stylesheet" />
-          <link rel='stylesheet' type='text/css' href='/static/nprogress.css' />
-          <link rel='stylesheet' type='text/css' href='/static/rc-slider.css' />
-          <link rel='stylesheet' type='text/css' href='/static/react-toastify.css' />
+          <link rel="stylesheet" type="text/css" href="/static/tachyons.min.css" />
+          <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
+          <link rel="stylesheet" type="text/css" href="/static/rc-slider.css" />
+          <link rel="stylesheet" type="text/css" href="/static/react-toastify.css" />
           <link rel="shortcut icon" href={getConfig().publicRuntimeConfig.FAVICON_URL} />
           <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.find,Array.prototype.includes,String.prototype.includes,Array.prototype.findIndex,Object.entries"></script>
