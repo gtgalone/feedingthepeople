@@ -83,7 +83,8 @@ class Index extends React.Component<Props> {
             시라큐스 크리스찬 아카데미 선생님들(40-50명)의 점심 식사를 매 주 준비해 온 경험이 있습니다.<br />
           </p>
         </section>
-        <section className="how-to relative pa1 pa4-ns">
+        <svg className="svg-1 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,144.532l0,95.468l-1920,0l0,-84c90.5,58 780,52.5 980,52.5c200,0 547.69,-52.5 634,-52.5c86.31,0 152,52.5 306,-11.468Z"></path><path d="M1485.5,159.333c18.37,-1.773 39.53,-7.468 38.5,-11.193c-1.03,-3.726 -15.25,-3.812 -39.5,-1.64c-24.25,2.172 -37.8,5.5 -36,12c1.8,6.5 18.63,2.607 37,0.833Z"></path><path d="M1549.19,145.713c0.34,1.34 -1.57,2.969 -4.24,3.639c-2.68,0.67 -5.13,0.127 -5.46,-1.212c-0.34,-1.34 1.56,-2.969 4.24,-3.639c2.68,-0.67 5.13,-0.127 5.46,1.212Z"></path></g></svg>
+        <section className="how-to relative pa1 pa1-ns">
           <h1 className="mb3 tc">이용 방법</h1>
           <div className="flex flex-column flex-row-ns justify-center flex-wrap relative items-center">
             <div className="step-card tc br3 mv3 mb0-ns bg-animate hover-bg-gold hover-white">
@@ -112,13 +113,17 @@ class Index extends React.Component<Props> {
             </div>
           </div>
         </section>
+        <div className="w-100">
+          <svg className="svg-2 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,146l0,94l-1920,0l0,-77.034c93,94.034 759,60.034 983.5,21.534c224.5,-38.5 456,13.5 594,13.5c138,0 152.14,-11.31 342.5,-52Z"></path></g></svg>
+        </div>
         <section className="menu w-100 relative pa1 pa4-ns vh-50">
           <h1 className="mb3 tc">지난 메뉴</h1>
           <div className="tc">
             ​곰탕, 순두부 찌개, 동그랑땡, 무생채, 멸치 볶음
           </div>
         </section>
-        <section className="after-use w-100 relative pa1 pa4-ns">
+        <svg className="svg-3 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,157.624l0,82.231l-1920,0l0,-106.045c54.693,-9.327 89,45.297 242,56.045c153,10.748 265.5,-30.5 411,-30.5c145.5,0 603,131.5 1267,-1.731Z"></path><path d="M83.5,131.354c-2.5,12.5 68.5,37 148,44.5c79.5,7.5 108.103,0.808 107,-5c-1.537,-8.094 -89.5,-14.365 -136.5,-22.5c-47,-8.135 -116,-29.5 -118.5,-17Z"></path></g></svg>
+        <section className="after-use w-100 relative pa1 pa1-ns">
           <h3 className="mb3 tc white">Feeding the People을 추천해요</h3>
           <div className="flex flex-column flex-row-ns flex-wrap justify-center items-center items-start-ns">
             <div className="after-use-card flex flex-column tc br3 mb0-ns grow">
@@ -172,6 +177,24 @@ class Index extends React.Component<Props> {
           section {
             font-family: 'Noto Serif KR', sans-serif !important;
           }
+          .svg-1, .svg-2, .svg-3 {
+            fill: currentcolor;
+            pointer-events: none;
+          }
+          .svg-1 {
+            bottom: -6px;
+            color: #72DE93;
+          }
+          .svg-2 {
+            top: 0;
+            z-index: 0;
+            color: #FFFFFF;
+            background-color: #2DBD9D;
+          }
+          .svg-3 {
+            color: #F49842;
+            bottom: -6px;
+          }
           .main-header {
             z-index: 5
           }
@@ -217,8 +240,10 @@ class Index extends React.Component<Props> {
             transform: rotate(50deg) scale(0.3);
           }
           .how-to {
-            background: linear-gradient(45deg,#2DBD9D 0%,#72DE93 100%);
+            background-color: #2DBD9D;
+            background-image: linear-gradient(#72DE93, #2DBD9D);
             color: #FFFFFF;
+            z-index: 2;
           }
           .step-card {
             max-width: 280px;
