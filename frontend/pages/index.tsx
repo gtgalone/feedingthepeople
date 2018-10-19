@@ -112,7 +112,7 @@ class Index extends React.Component<Props> {
             </div>
           </div>
         </section>
-        <section className="menu w-100 relative pa1 pa4-ns">
+        <section className="menu w-100 relative pa1 pa4-ns vh-50">
           <h1 className="mb3 tc">지난 메뉴</h1>
           <div className="tc">
             ​곰탕, 순두부 찌개, 동그랑땡, 무생채, 멸치 볶음
@@ -169,6 +169,9 @@ class Index extends React.Component<Props> {
             flex-shrink: 0;
             flex-basis: auto;
           }
+          section {
+            font-family: 'Noto Serif KR', sans-serif !important;
+          }
           .main-header {
             z-index: 5
           }
@@ -213,19 +216,9 @@ class Index extends React.Component<Props> {
             left: ${ isMobile ? 0 : '10vw' };
             transform: rotate(50deg) scale(0.3);
           }
-          .how-to:before {
-            z-index: 0;
-            content: '';
-            display: block;
-            opacity: 0.1;
-            background-image: url('/static/pattern.png');
-            background-size: 30%;
-            background-repeat: repeat;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+          .how-to {
+            background: linear-gradient(45deg,#2DBD9D 0%,#72DE93 100%);
+            color: #FFFFFF;
           }
           .step-card {
             max-width: 280px;
@@ -235,8 +228,8 @@ class Index extends React.Component<Props> {
             padding: 1.778rem;
           }
           .after-use {
-            background-color: rgb(244, 226, 65);
-            background-image: linear-gradient(rgb(244, 152, 66), rgb(244, 226, 65));
+            background-color: #F4E241;
+            background-image: linear-gradient(#F49842, #F4E241);
           }
           .after-use-card {
             max-width: 280px;
