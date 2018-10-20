@@ -52,13 +52,19 @@ class Index extends React.Component<Props> {
     const { isMobile } = this.props
     return (
       <div className="w-100">
-        <div className="main-image relative mb5">
-          <div className="main-header relative flex justify-center pa3 ph-5">
-            <img height="90" src="/static/main-logo.png" />
-          </div>
+        <div className="main-image relative">
           <div className="background-shadow absolute"></div>
-          <div className="main-image-text absolute flex flex-wrap">
-            <div className="text-white-6">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
+          <div className="main-image-contents relative vh-100 white">
+            <div className="main-header relative flex justify-center pa3 ph-5">
+              <img height="90" src="/static/main-logo.png" />
+            </div>
+            <div className="main-image-text absolute flex flex-wrap">
+              <div className="o-60">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
+            </div>
+            <div className="flex flex-column items-center justify-center absolute bottom-2 w-100">
+              <i className="arrow-down f2 fw4 fas fa-angle-down o-60"></i>
+              <span className="helvetica o-50 f6">S C R O L L</span>
+            </div>
           </div>
         </div>
         <section className="about w-100 pa4 tc relative">
@@ -199,14 +205,15 @@ class Index extends React.Component<Props> {
             z-index: 5
           }
           .main-image {
-            height: 500px;
             background-image: url(/static/main-image.jpg);
             background-size: cover;
             background-position: center;
           }
+          .main-image-contents {
+            z-index: 2;
+          }
           .main-image-text {
             width: 85%;
-            z-index: 5;
             font-size: 20px;
             line-height: 1.7 !important;
             top: 50%;
@@ -221,6 +228,20 @@ class Index extends React.Component<Props> {
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1;
+          }
+          @keyframes bounce {
+            0%, 16.667%, 33.333%, 53.33%, 67.667% {
+              transform: translateY(0);
+            }
+            26.667% {
+              transform: translateY(-30px);
+            }
+            40% {
+              transform: translateY(-15px);
+            }
+          }
+          .arrow-down {
+            animation: bounce 3s infinite;
           }
           .about {
             margin: 0 auto;
