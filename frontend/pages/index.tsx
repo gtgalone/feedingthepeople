@@ -52,7 +52,7 @@ class Index extends React.Component<Props> {
     const { isMobile } = this.props
     return (
       <div className="w-100">
-        <div className="main-image relative">
+        <div className="main-image relative mb5">
           <div className="main-header relative flex justify-center pa3 ph-5">
             <img height="90" src="/static/main-logo.png" />
           </div>
@@ -69,7 +69,7 @@ class Index extends React.Component<Props> {
             일회용 그릇은 사용하지 않고, 반찬그릇은 $5 Deposit을 받으며 용기 반환시 Refund 해 드립니다.<br />
             금액은 $40이며 매 주 월요일에 배달해 드립니다.
           </p>
-          <h1 className="mb3 relative">
+          <h1 className="mv5 relative">
             Chef of Feeding the People
             <img ref={this.heartRef} src="/static/heart.png" className="absolute heart-1" />
             <img ref={this.heart2Ref} src="/static/heart.png" className="absolute heart-2" />
