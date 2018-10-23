@@ -21,7 +21,11 @@ class Index extends React.Component<Props> {
   public componentDidMount() {
     window.addEventListener(
       'scroll',
-      throttle(this.handleScroll, 99)
+      throttle(this.handleScroll, 99),
+      {
+        passive: true,
+        capture: true
+      }
     )
   }
   
@@ -36,9 +40,9 @@ class Index extends React.Component<Props> {
     if (!this.ticking) {
       window.requestAnimationFrame(() => {
         this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
-        this.heartRef.current.style.transform = `rotate(30deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
+        this.heartRef.current.style.transform = `rotate(${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
         this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
-        this.heart2Ref.current.style.transform = `rotate(-30deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
+        this.heart2Ref.current.style.transform = `rotate(-${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
         this.ticking = false
       })
 
@@ -57,13 +61,14 @@ class Index extends React.Component<Props> {
         <div className="main-image relative">
           <div className="background-shadow absolute"></div>
           <div className="main-image-contents relative vh-100 white">
-            <div className="main-header relative flex justify-center pa3 ph-5">
-              <img height="90" src="/static/main-logo.png" />
+            <div className="main-header relative flex flex-column justify-center items-center pa3 ph-5">
+              <img width="155" height="90" src="/static/main-logo.png" />
+              <span className="main-logo-text helvetica fw4 o-60 ba b--white-60 pa1 shadow-3">Feeding the People</span>
             </div>
             <div className="main-image-text absolute flex flex-wrap">
               <div className="o-60">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
             </div>
-            <div onClick={this.onClickScroll} className="flex flex-column items-center justify-center absolute bottom-2 w-100">
+            <div onClick={this.onClickScroll} className="flex flex-column items-center justify-center absolute bottom-2 w-100 pointer">
               <i className="arrow-down f2 fw4 fas fa-angle-down o-60"></i>
               <span className="helvetica o-50 f6">S C R O L L</span>
             </div>
@@ -184,6 +189,9 @@ class Index extends React.Component<Props> {
           }
           section {
             font-family: 'Noto Serif KR', sans-serif !important;
+          }
+          .main-logo-text {
+            letter-spacing: 4px;
           }
           .svg-1, .svg-2, .svg-3 {
             fill: currentcolor;
