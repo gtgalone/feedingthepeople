@@ -9,16 +9,16 @@ class Index extends React.Component<Props> {
   private ticking: boolean
   private heartRef: any
   private heart2Ref: any
+  private aboutRef: any
 
   public constructor(props) {
     super(props)
     this.heartRef = React.createRef()
     this.heart2Ref = React.createRef()
+    this.aboutRef = React.createRef()
   }
 
   public componentDidMount() {
-    const { isMobile } = this.props
-    console.log(isMobile)  
     window.addEventListener(
       'scroll',
       throttle(this.handleScroll, 99)
@@ -33,8 +33,6 @@ class Index extends React.Component<Props> {
   }
 
   public handleScroll = () => {
-    console.log(window)
-    console.log(window.scrollY / document.body.clientHeight)
     if (!this.ticking) {
       window.requestAnimationFrame(() => {
         this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
@@ -46,6 +44,10 @@ class Index extends React.Component<Props> {
 
       this.ticking = true
     }
+  }
+
+  public onClickScroll = () => {
+    this.aboutRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' })
   }
 
   public render() {
@@ -61,13 +63,13 @@ class Index extends React.Component<Props> {
             <div className="main-image-text absolute flex flex-wrap">
               <div className="o-60">MSG를 사용하지 않고, <br />천연 조미료만을 사용한 엄마의 반찬</div>
             </div>
-            <div className="flex flex-column items-center justify-center absolute bottom-2 w-100">
+            <div onClick={this.onClickScroll} className="flex flex-column items-center justify-center absolute bottom-2 w-100">
               <i className="arrow-down f2 fw4 fas fa-angle-down o-60"></i>
               <span className="helvetica o-50 f6">S C R O L L</span>
             </div>
           </div>
         </div>
-        <section className="about w-100 pa4 tc relative">
+        <section ref={this.aboutRef} className="about w-100 pa4 tc relative">
           <p className="lh-copy">
             Feeding the People 은 매 번 음식을 사드시기 번거로우신 분들을 위해 만들어졌습니다.<br />
             MSG를 전혀 쓰지 않고, 천연 조미료만을 사용해 만든 건강한 음식을 매 주 배달해 드립니다.<br />
