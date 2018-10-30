@@ -7,18 +7,21 @@ interface Props {
 
 class Index extends React.Component<Props> {
   private ticking: boolean
+  private mainImageHeight: any
   private heartRef: any
   private heart2Ref: any
   private aboutRef: any
 
   public constructor(props) {
     super(props)
+    this.mainImageHeight = React.createRef()
     this.heartRef = React.createRef()
     this.heart2Ref = React.createRef()
     this.aboutRef = React.createRef()
   }
 
   public componentDidMount() {
+    this.mainImageHeight.current.style.height = window.innerHeight + 'px'
     window.addEventListener(
       'scroll',
       throttle(this.handleScroll, 99),
@@ -28,7 +31,7 @@ class Index extends React.Component<Props> {
       }
     )
   }
-  
+
   public componentWillUnmount() {
     window.removeEventListener(
       'scroll',
@@ -39,9 +42,9 @@ class Index extends React.Component<Props> {
   public handleScroll = () => {
     if (!this.ticking) {
       window.requestAnimationFrame(() => {
-        this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight * 3}`
         this.heartRef.current.style.transform = `rotate(${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
-        this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight * 3}`
         this.heart2Ref.current.style.transform = `rotate(-${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
         this.ticking = false
       })
@@ -60,7 +63,7 @@ class Index extends React.Component<Props> {
       <div className="w-100">
         <div className="main-image relative">
           <div className="background-shadow absolute"></div>
-          <div className="main-image-contents relative vh-100 white">
+          <div ref={this.mainImageHeight} className="main-image-contents vh-100 relative white">
             <div className="main-header relative flex flex-column justify-center items-center pa3 ph-5">
               <img width="155" height="90" src="/static/main-logo.png" />
               <span className="main-logo-text helvetica fw4 o-60 ba b--white-60 pa1 shadow-3">Feeding the People</span>
@@ -92,7 +95,7 @@ class Index extends React.Component<Props> {
             THE CHEF: HAELEE CHOI (최혜리)
             <br /><br />
             두 아이의 엄마이자 20년차 가정주부입니다.<br />
-            곧 대학을 가는 아들을 생각하며 자녀를 먹이는 마음으로 음식을 만들며,<br /> 
+            곧 대학을 가는 아들을 생각하며 자녀를 먹이는 마음으로 음식을 만들며,<br />
             시라큐스 크리스찬 아카데미 선생님들(40-50명)의 점심 식사를 매 주 준비해 온 경험이 있습니다.<br />
           </p>
         </section>
