@@ -6,7 +6,7 @@ import getConfig from 'next/config'
 import { Provider } from 'react-redux'
 import moment from 'moment'
 import isBefore from 'date-fns/is_before'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 import Layout from 'src/components/layout'
 import { mobileRegexp } from 'src/constants/const'
@@ -80,13 +80,12 @@ class MyApp extends App<Props> {
           <title>Feeding the People</title>
         </Head>
         <ToastContainer
-          position="top-center"
+          position={toast.POSITION.TOP_CENTER}
           autoClose={10000}
           hideProgressBar
           newestOnTop={false}
           closeOnClick={false}
           rtl={false}
-          pauseOnVisibilityChange
           draggable
           pauseOnHover
         />

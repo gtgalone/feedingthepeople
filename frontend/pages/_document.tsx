@@ -38,7 +38,7 @@ export default class extends Document {
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
           <link rel="stylesheet" type="text/css" href="/static/rc-slider.css" />
           <link rel="stylesheet" type="text/css" href="/static/react-toastify.css" />
-          <link rel="shortcut icon" href={getConfig().publicRuntimeConfig.FAVICON_URL} />
+          <link rel="shortcut icon" href="/static/favicon.ico" />
           <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.find,Array.prototype.includes,String.prototype.includes,Array.prototype.findIndex,Object.entries"></script>
           { getConfig().publicRuntimeConfig.KAKAO_JAVASCRIPT_KEY && <script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${getConfig().publicRuntimeConfig.KAKAO_JAVASCRIPT_KEY}&libraries=clusterer`}></script> }
