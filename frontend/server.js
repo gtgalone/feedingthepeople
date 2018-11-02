@@ -11,6 +11,13 @@ app.prepare()
   .then(() => {
     const server = express()
 
+    if (!dev) server.use((req, res, next) => {
+      if (req.hostname !== 'feedingthepeople.now.sh') {
+        return res.redirect(`https://feedingthepeople.now.sh${req.originalUrl}`)
+      }
+      return next()
+    })
+
     server.get('/users/:id', (req, res) => {
       return app.render(req, res, '/users', { id: req.params.id })
     })
