@@ -1,5 +1,6 @@
 const express = require('express')
 const next = require('next')
+const axios = require('axios')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -9,6 +10,13 @@ const handle = app.getRequestHandler()
 app.prepare()
   .then(() => {
     const server = express()
+
+    if (!dev) server.use((req, res, next) => {
+      if (req.hostname !== 'feedingthepeople.now.sh') {
+        return res.redirect(`https://feedingthepeople.now.sh${req.originalUrl}`)
+      }
+      return next()
+    })
 
     server.get('/users/:id', (req, res) => {
       return app.render(req, res, '/users', { id: req.params.id })

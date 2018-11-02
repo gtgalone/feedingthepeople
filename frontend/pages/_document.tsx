@@ -1,18 +1,40 @@
 import * as React from 'react'
 import Document, {Head, Main, NextScript} from 'next/document'
 import getConfig from 'next/config'
+import axios from 'axios'
+import htmlparser from 'htmlparser2'
 import 'isomorphic-unfetch'
 
-export default class extends Document {
+interface Props {
+  _sharedData: string
+}
+
+export default class extends Document<Props> {
   static async getInitialProps(...args: any[]) {
     const d: any = Document
     const documentProps = await d.getInitialProps(...args)
     const { renderPage } = args[0]
     const page = renderPage()
-    return { ...documentProps, ...page }
+
+    let html = await axios.get('https://www.instagram.com/choihaelee/').then(res => res.data)
+    const re = /shortCode/i
+
+    let _sharedData
+    let parser = new htmlparser.Parser({
+      ontext: (text) => {
+        if(re.test(text)) _sharedData = text
+      }
+    }, {
+      decodeEntities: true
+    })
+    parser.write(html)
+    parser.end()
+
+    return { ...documentProps, ...page, _sharedData }
   }
 
   render() {
+    const { _sharedData } = this.props
     return (
       <html lang="ko">
         <Head>
@@ -39,6 +61,11 @@ export default class extends Document {
           <link rel="stylesheet" type="text/css" href="/static/rc-slider.css" />
           <link rel="stylesheet" type="text/css" href="/static/react-toastify.css" />
           <link rel="shortcut icon" href="/static/favicon.ico" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `${_sharedData}`
+            }}
+          />
           <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.find,Array.prototype.includes,String.prototype.includes,Array.prototype.findIndex,Object.entries"></script>
           { getConfig().publicRuntimeConfig.KAKAO_JAVASCRIPT_KEY && <script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${getConfig().publicRuntimeConfig.KAKAO_JAVASCRIPT_KEY}&libraries=clusterer`}></script> }
