@@ -10,14 +10,6 @@ app.prepare()
   .then(() => {
     const server = express()
 
-    server.get('/a', (req, res) => {
-      return app.render(req, res, '/b', req.query)
-    })
-
-    server.get('/b', (req, res) => {
-      return app.render(req, res, '/a', req.query)
-    })
-
     server.get('/users/:id', (req, res) => {
       return app.render(req, res, '/users', { id: req.params.id })
     })
@@ -28,6 +20,8 @@ app.prepare()
 
     server.listen(port, (err) => {
       if (err) throw err
+      setInterval(() => axios.get('https://buildinggthebridgeusa.com/'), 60 * 30 * 1000)
+
       console.log(`> Ready on http://localhost:${port}`)
     })
   })
