@@ -20,7 +20,7 @@ app.prepare()
 
     server.listen(port, (err) => {
       if (err) throw err
-      setInterval(() => axios.get('https://buildinggthebridgeusa.com/'), 60 * 30 * 1000)
+      setInterval(() => axios.get('https://buildingthebridgeusa.com/'), 60 * 10 * 1000)
 
       console.log(`> Ready on http://localhost:${port}`)
     })
