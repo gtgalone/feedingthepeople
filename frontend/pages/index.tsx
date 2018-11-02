@@ -3,25 +3,36 @@ import throttle from 'lodash/throttle'
 
 interface Props {
   isMobile: boolean
+  html: string
 }
 
-class Index extends React.Component<Props> {
+interface State {
+  menus: any[]
+}
+
+class Index extends React.Component<Props, State> {
   private ticking: boolean
   private mainImageHeight: any
   private heartRef: any
   private heart2Ref: any
-  private aboutRef: any
+  private menusRef: any
 
   public constructor(props) {
     super(props)
+    this.state = {
+      menus: []
+    }
     this.mainImageHeight = React.createRef()
     this.heartRef = React.createRef()
     this.heart2Ref = React.createRef()
-    this.aboutRef = React.createRef()
+    this.menusRef = React.createRef()
   }
 
   public componentDidMount() {
     this.mainImageHeight.current.style.height = window.innerHeight + 'px'
+    this.setState({
+      menus: window._sharedData.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges.splice(0, 5)
+    })
     window.addEventListener(
       'scroll',
       throttle(this.handleScroll, 99),
@@ -42,10 +53,10 @@ class Index extends React.Component<Props> {
   public handleScroll = () => {
     if (!this.ticking) {
       window.requestAnimationFrame(() => {
-        this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight * 3}`
-        this.heartRef.current.style.transform = `rotate(${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
-        this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight * 3}`
-        this.heart2Ref.current.style.transform = `rotate(-${window.scrollY / document.body.clientHeight * 100}deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
+        this.heartRef.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heartRef.current.style.transform = `rotate(${window.scrollY / document.body.clientHeight * 50}deg) scale(${window.scrollY / document.body.clientHeight + 0.1})`
+        this.heart2Ref.current.style.opacity = `${window.scrollY / document.body.clientHeight}`
+        this.heart2Ref.current.style.transform = `rotate(-${window.scrollY / document.body.clientHeight * 50}deg) scale(${window.scrollY / document.body.clientHeight + 0.3})`
         this.ticking = false
       })
 
@@ -54,11 +65,12 @@ class Index extends React.Component<Props> {
   }
 
   public onClickScroll = () => {
-    this.aboutRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' })
+    this.menusRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' })
   }
 
   public render() {
     const { isMobile } = this.props
+    const { menus } = this.state
     return (
       <div className="w-100">
         <div className="main-image relative">
@@ -77,31 +89,26 @@ class Index extends React.Component<Props> {
             </div>
           </div>
         </div>
-        <section ref={this.aboutRef} className="about w-100 pa4 tc relative">
-          <p className="lh-copy">
-            Feeding the People 은 매 번 음식을 사드시기 번거로우신 분들을 위해 만들어졌습니다.<br />
-            MSG를 전혀 쓰지 않고, 천연 조미료만을 사용해 만든 건강한 음식을 매 주 배달해 드립니다.<br />
-            ​<br />
-            일회용 그릇은 사용하지 않고, 반찬그릇은 $5 Deposit을 받으며 용기 반환시 Refund 해 드립니다.<br />
-            금액은 $40이며 매 주 월요일에 배달해 드립니다.
-          </p>
-          <h1 className="mv5 relative">
-            Chef of Feeding the People
-            <img ref={this.heartRef} src="/static/heart.png" className="absolute heart-1" />
-            <img ref={this.heart2Ref} src="/static/heart.png" className="absolute heart-2" />
-          </h1>
-          <img src="/static/about.jpg" className="w-90 w-50-ns br3" />
-          <p className="lh-copy">
-            THE CHEF: HAELEE CHOI (최혜리)
-            <br /><br />
-            두 아이의 엄마이자 20년차 가정주부입니다.<br />
-            곧 대학을 가는 아들을 생각하며 자녀를 먹이는 마음으로 음식을 만들며,<br />
-            시라큐스 크리스찬 아카데미 선생님들(40-50명)의 점심 식사를 매 주 준비해 온 경험이 있습니다.<br />
-          </p>
+        <section ref={this.menusRef} className="menus pa1 center">
+          <h1 className="o-0 f6">시라큐스 한국 음식, 반찬 배달 서비스 - Feeding the People</h1>
+          <h3 className="f3 tc">지난 메뉴</h3>
+          <div className="flex flex-column flex-row-ns justify-center flex-wrap items-center relative pa1 pa4-ns center">
+            { menus.map((v, i) => (
+              <div key={i} className="menus-card mb3 mr3-ns ba b--black-10">
+                <img src={v.node.display_url} />
+                <div className="tc pa3">
+                  <pre>{v.node.edge_media_to_caption.edges[0].node.text.replace('시라큐스 한국 음식, 반찬 배달', '').replace('https://feedingthepeople.now.sh', '').trim()}</pre>
+                </div>
+              </div>
+            ))}
+            <a href="https://www.instagram.com/choihaelee/" target="blank" className="menus-card link mb3 mr3-ns black ba b--black-10 h-100 tc pa3 dim">
+              지난 메뉴 더보기
+            </a>
+          </div>
         </section>
         <svg className="svg-1 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,144.532l0,95.468l-1920,0l0,-84c90.5,58 780,52.5 980,52.5c200,0 547.69,-52.5 634,-52.5c86.31,0 152,52.5 306,-11.468Z"></path><path d="M1485.5,159.333c18.37,-1.773 39.53,-7.468 38.5,-11.193c-1.03,-3.726 -15.25,-3.812 -39.5,-1.64c-24.25,2.172 -37.8,5.5 -36,12c1.8,6.5 18.63,2.607 37,0.833Z"></path><path d="M1549.19,145.713c0.34,1.34 -1.57,2.969 -4.24,3.639c-2.68,0.67 -5.13,0.127 -5.46,-1.212c-0.34,-1.34 1.56,-2.969 4.24,-3.639c2.68,-0.67 5.13,-0.127 5.46,1.212Z"></path></g></svg>
         <section className="how-to relative pa1 pa1-ns">
-          <h1 className="mb3 tc">이용 방법</h1>
+          <h3 className="f3 mb3 tc">이용 방법</h3>
           <div className="flex flex-column flex-row-ns justify-center flex-wrap relative items-center">
             <div className="step-card tc br3 mv3 mb0-ns bg-animate hover-bg-gold hover-white">
               <h4>Step 1</h4>
@@ -132,15 +139,31 @@ class Index extends React.Component<Props> {
         <div className="w-100">
           <svg className="svg-2 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,146l0,94l-1920,0l0,-77.034c93,94.034 759,60.034 983.5,21.534c224.5,-38.5 456,13.5 594,13.5c138,0 152.14,-11.31 342.5,-52Z"></path></g></svg>
         </div>
-        <section className="menu w-100 relative pa1 pa4-ns vh-50">
-          <h1 className="mb3 tc">지난 메뉴</h1>
-          <div className="tc">
-            ​곰탕, 순두부 찌개, 동그랑땡, 무생채, 멸치 볶음
-          </div>
+        <section className="about w-100 pa4 tc relative">
+          <p className="lh-copy">
+            Feeding the People 은 매 번 음식을 사드시기 번거로우신 분들을 위해 만들어졌습니다.<br />
+            MSG를 전혀 쓰지 않고, 천연 조미료만을 사용해 만든 건강한 음식을 매 주 배달해 드립니다.<br />
+            ​<br />
+            일회용 그릇은 사용하지 않고, 반찬그릇은 $5 Deposit을 받으며 용기 반환시 Refund 해 드립니다.<br />
+            금액은 $40이며 매 주 월요일에 배달해 드립니다.
+          </p>
+          <h1 className="mv5 relative">
+            Chef of Feeding the People
+            <img ref={this.heartRef} src="/static/heart.png" className="absolute heart-1" />
+            <img ref={this.heart2Ref} src="/static/heart.png" className="absolute heart-2" />
+          </h1>
+          <img src="/static/about.jpg" className="w-90 w-50-ns br3" />
+          <p className="lh-copy">
+            THE CHEF: HAELEE CHOI (최혜리)
+            <br /><br />
+            두 아이의 엄마이자 20년차 가정주부입니다.<br />
+            곧 대학을 가는 아들을 생각하며 자녀를 먹이는 마음으로 음식을 만들며,<br />
+            시라큐스 크리스찬 아카데미 선생님들(40-50명)의 점심 식사를 매 주 준비해 온 경험이 있습니다.<br />
+          </p>
         </section>
         <svg className="svg-3 relative" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title" viewBox="0 0 1920 240" id="goop"><title id="title">goop</title><g><path d="M1920,157.624l0,82.231l-1920,0l0,-106.045c54.693,-9.327 89,45.297 242,56.045c153,10.748 265.5,-30.5 411,-30.5c145.5,0 603,131.5 1267,-1.731Z"></path><path d="M83.5,131.354c-2.5,12.5 68.5,37 148,44.5c79.5,7.5 108.103,0.808 107,-5c-1.537,-8.094 -89.5,-14.365 -136.5,-22.5c-47,-8.135 -116,-29.5 -118.5,-17Z"></path></g></svg>
         <section className="after-use w-100 relative pa1 pa1-ns">
-          <h3 className="mb3 tc white">Feeding the People을 추천해요</h3>
+          <h3 className="f3 mb3 tc white">Feeding the People을 추천해요</h3>
           <div className="flex flex-column flex-row-ns flex-wrap justify-center items-center items-start-ns">
             <div className="after-use-card flex flex-column tc br3 mb0-ns grow">
               <div className="flex flex-row o-30">
@@ -191,7 +214,7 @@ class Index extends React.Component<Props> {
             flex-basis: auto;
           }
           section {
-            font-family: 'Noto Serif KR', sans-serif !important;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
           }
           .main-logo-text {
             letter-spacing: 4px;
@@ -255,6 +278,13 @@ class Index extends React.Component<Props> {
           }
           .arrow-down {
             animation: bounce 3s infinite;
+          }
+          .menus {
+            max-width: 1000px;
+          }
+          .menus-card {
+            max-width: 280px;
+            min-width: 280px;
           }
           .about {
             margin: 0 auto;

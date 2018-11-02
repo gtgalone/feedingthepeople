@@ -9,6 +9,7 @@ interface Window {
   ActiveXObject: any
   gtag: any
   email: string
+  _sharedData: any
 }
 declare module '*.png' {
   const resource: string
