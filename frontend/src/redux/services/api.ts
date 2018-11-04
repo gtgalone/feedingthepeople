@@ -69,7 +69,7 @@ const parcelsSchema = new schema.Entity('parcels')
 
 // api services
 export const fetchParcel = (endpoint: string, token: string) => callApi(endpoint, parcelsSchema, token)
-export const fetchLogin = async (http: AxiosInstance, payload: any) => {
+export const fetchLogin = async (_http: AxiosInstance, payload: any) => {
   // try {
   //   return await http.post('/api/login', {
   //     user: payload,
