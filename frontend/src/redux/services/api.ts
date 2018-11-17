@@ -1,6 +1,6 @@
 import { schema, normalize, Schema } from 'normalizr'
 import getConfig from 'next/config'
-import 'isomorphic-fetch'
+import 'isomorphic-unfetch'
 import { AxiosInstance } from 'axios'
 import { processLogout } from '../../shared/helper/auth-helper'
 
