@@ -17,7 +17,7 @@
     "es6-promise": "4.1.1",
     "htmlparser2": "^3.10.0",
     "immutability-helper": "latest",
-    "isomorphic-unfetch": "latest",
+    "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
