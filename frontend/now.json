@@ -1,6 +1,7 @@
 {
-  "version": 2,
+  "version": 1,
   "alias": [
     "feedingthepeople"
-  ]
+  ],
+  "public": true
 }
